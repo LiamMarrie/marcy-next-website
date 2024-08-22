@@ -1,118 +1,67 @@
-import { useState } from "react";
-import Link from "next/link";
+import React, { useState } from "react";
 
-const Header = () => {
-  const [isNavOpen, setIsNavOpen] = useState(false);
+const Navbar = ({ logoLink, links, roundedHeaderButton = false }) => {
+  const [showNavLinks, setShowNavLinks] = useState(false);
 
-  const toggleNav = () => {
-    setIsNavOpen(!isNavOpen);
-  };
+  const toggleNavbar = () => setShowNavLinks(!showNavLinks);
+
+  const defaultLinks = (
+    <div className="inline-block">
+      <a href="/#" className="text-lg my-2 lg:text-sm lg:mx-6 lg:my-0 font-semibold tracking-wide transition duration-300 pb-1 border-b-2 border-transparent hover:border-primary-500 hover:text-primary-500">
+        About
+      </a>
+      <a href="/#" className="text-lg my-2 lg:text-sm lg:mx-6 lg:my-0 font-semibold tracking-wide transition duration-300 pb-1 border-b-2 border-transparent hover:border-primary-500 hover:text-primary-500">
+        Blog
+      </a>
+      <a href="/#" className="text-lg my-2 lg:text-sm lg:mx-6 lg:my-0 font-semibold tracking-wide transition duration-300 pb-1 border-b-2 border-transparent hover:border-primary-500 hover:text-primary-500">
+        Pricing
+      </a>
+      <a href="/#" className="text-lg my-2 lg:text-sm lg:mx-6 lg:my-0 font-semibold tracking-wide transition duration-300 pb-1 border-b-2 border-transparent hover:border-primary-500 hover:text-primary-500">
+        Contact Us
+      </a>
+      <a href="/#" className="text-lg my-2 lg:text-sm lg:mx-6 lg:my-0 font-semibold tracking-wide transition duration-300 pb-1 border-b-2 border-transparent hover:border-primary-500 hover:text-primary-500 lg:ml-12">
+        Login
+      </a>
+      <a href="/#" className={`lg:mx-0 px-8 py-3 rounded ${roundedHeaderButton ? 'rounded-full' : ''} bg-primary-500 text-gray-100 hover:bg-primary-700 hover:text-gray-200 focus:shadow-outline border-b-0`}>
+        Sign Up
+      </a>
+    </div>
+  );
+
+  const defaultLogoLink = (
+    <a href="/" className="flex items-center font-black text-2xl no-underline">
+      <img src="https://via.placeholder.com/40" alt="logo" className="w-10 mr-3" />
+      Placeholder
+    </a>
+  );
+
+  logoLink = logoLink || defaultLogoLink;
+  links = links || defaultLinks;
 
   return (
-    <header className="header" data-header>
-      <div className="container">
-        <Link href="/" legacyBehavior>
-          <a className="logo">
-            <h2 className="navbar-title">Haven Family Wellness</h2>
-          </a>
-        </Link>
+    <header className="flex justify-between items-center max-w-screen-xl mx-auto">
+      {/* Desktop Navbar */}
+      <nav className="hidden lg:flex flex-1 justify-between items-center">
+        {logoLink}
+        {links}
+      </nav>
 
-        <nav className={`navbar ${isNavOpen ? "open" : ""}`} data-navbar>
-          <div className="navbar-top">
-            <Link href="/" legacyBehavior>
-              <a className="logo">
-                <h3 className="navbar-title">Haven Family Wellness</h3>
-              </a>
-            </Link>
-
-            <button
-              className="nav-close-btn"
-              aria-label="close menu"
-              onClick={toggleNav}
-            >
-              <ion-icon name="close-outline" aria-hidden="true"></ion-icon>
-            </button>
-          </div>
-
-          <ul className="navbar-list">
-            <li>
-              <Link href="/#hero" legacyBehavior>
-                <a className="navbar-link">Home</a>
-              </Link>
-            </li>
-            <li>
-              <Link href="/#about" legacyBehavior>
-                <a className="navbar-link">About</a>
-              </Link>
-            </li>
-            <li>
-              <Link href="/#programs" legacyBehavior>
-                <a className="navbar-link">Programs</a>
-              </Link>
-            </li>
-            <li>
-              <Link href="/calendar" legacyBehavior>
-                <a className="navbar-link">Calendar</a>
-              </Link>
-            </li>
-            {/* <li><Link href="/#testimonials" legacyBehavior><a className="navbar-link">Testimonials</a></Link></li>
-            <li><Link href="/#contact" legacyBehavior><a className="navbar-link">Contact</a></Link></li> */}
-          </ul>
-
-          <div className="wrapper">
-            <a href="mailto:info@email.com" className="contact-link">
-              Havenfamilywellnessinc@gmail.com
-            </a>
-            <a href="tel:001234567890" className="contact-link">
-              +1 (403) 899-3018
-            </a>
-          </div>
-
-          <ul className="social-list">
-            <li>
-              <a href="https://x.com/?login" className="social-link">
-                <ion-icon name="logo-twitter"></ion-icon>
-              </a>
-            </li>
-            <li>
-              <a href="https://www.facebook.com/" className="social-link">
-                <ion-icon name="logo-facebook"></ion-icon>
-              </a>
-            </li>
-            <li>
-              <a
-                href="https://www.instagram.com/havenfamilywellnessinc/"
-                className="social-link"
-              >
-                <ion-icon name="logo-instagram"></ion-icon>
-              </a>
-            </li>
-          </ul>
-        </nav>
-
-        <Link href="/signin" legacyBehavior>
-          <a className="btn btn-primary" id="signInNav">
-            Sign in
-          </a>
-        </Link>
-
-        <button
-          className="nav-open-btn"
-          aria-label="open menu"
-          onClick={toggleNav}
-        >
-          <ion-icon name="menu-outline" aria-hidden="true"></ion-icon>
+      {/* Mobile Navbar */}
+      <nav className="flex flex-1 items-center justify-between lg:hidden">
+        {logoLink}
+        <button onClick={toggleNavbar} className="lg:hidden z-20 focus:outline-none hover:text-primary-500 transition duration-300">
+          {showNavLinks ? 'Close' : 'Menu'}
         </button>
+      </nav>
 
-        <div
-          className="overlay"
-          onClick={toggleNav}
-          data-nav-toggler
-          data-overlay
-        ></div>
-      </div>
+      {/* Mobile Nav Links */}
+      {showNavLinks && (
+        <div className="lg:hidden fixed top-0 left-0 right-0 mt-16 mx-4 my-6 p-8 border text-center rounded-lg text-gray-900 bg-white z-10">
+          {links}
+        </div>
+      )}
     </header>
   );
 };
 
-export default Header;
+export default Navbar;
