@@ -4,7 +4,7 @@
 import React from "react";
 import "@/app/globals.css"; // Assuming global styles import
 import Head from "next/head";
-import Navbar from "../components/Header";
+import Header from "../components/Header";
 import HeroSection from "../components/Hero";
 import AboutSection from "../components/About";
 
@@ -30,7 +30,7 @@ export default function Home() {
         />
       </Head>
 
-      <Navbar/>
+      <Header />
       <HeroSection />
       <AboutSection />
 
