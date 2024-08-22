@@ -30,7 +30,7 @@ export default function Home() {
         />
       </Head>
 
-      <Navbar>
+      <Navbar/>
       <HeroSection />
       <AboutSection />
 
